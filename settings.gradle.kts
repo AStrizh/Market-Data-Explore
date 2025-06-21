@@ -1,1 +1,1 @@
-rootProject.name = "Market-Data-Explore"
+rootProject.name = "market-data"
