@@ -5,7 +5,7 @@ vscode:
   extensions:
     - redhat.java
     - vscjava.vscode-spring-boot-dashboard
-    - angular.ng-template
+    - vscjava.vscode-java-pack    
 
 tasks:
   - init: ./gradlew build
