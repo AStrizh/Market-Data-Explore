@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Market Data Explorer</title>
+    <title>Stock Quote Viewer</title>
 </head>
 <body>
-<h1>Welcome to Market Data Explorer</h1>
-<p>This app will eventually fetch stock quotes from Polygon.io.</p>
-<p>Try accessing the mock API: <a href="/api/quote?symbol=XXXX">/api/quote?symbol=XXXX</a></p>
+<h1>Stock Quote Viewer</h1>
+<label for="symbol">Enter Symbol:</label>
+<input type="text" id="symbol" placeholder="e.g., SPY">
+<button onclick="getQuote()">Get Quote</button>
+
+<pre id="result"></pre>
+
+<script>
+    async function getQuote() {
+        const symbol = document.getElementById("symbol").value;
+        const response = await fetch(`/api/quote?symbol=${symbol}`);
+        const data = await response.json();
+        document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+    }
+</script>
 </body>
 </html>

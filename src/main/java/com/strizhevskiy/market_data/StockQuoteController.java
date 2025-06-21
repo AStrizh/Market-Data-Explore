@@ -1,26 +1,25 @@
 package com.strizhevskiy.market_data;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @RestController
 public class StockQuoteController {
 
-    @GetMapping("/api/quote")
-    public QuoteResponse getMockQuote(@RequestParam String symbol) {
-        // Mocked quote value
-        return new QuoteResponse(
-                symbol.toUpperCase(),
-                new BigDecimal("217.35"),
-                LocalDateTime.now()
-        );
+    private final PolygonService polygonService;
+
+    public StockQuoteController(PolygonService polygonService) {
+        this.polygonService = polygonService;
     }
 
-    // Inner class to define the response format
-    public record QuoteResponse(String symbol, BigDecimal price, LocalDateTime timestamp) {}
+    @GetMapping("/api/quote")
+    public PublicQuote getLiveQuote(@RequestParam String symbol) {
+        QuoteResponse raw = polygonService.fetchQuote(symbol);
+
+        return new PublicQuote(
+                raw.ticker(), raw.open(), raw.close(), raw.high(),
+                raw.low(), raw.volume(), raw.vwap(), raw.timestamp(), raw.numTrades()
+        );
+    }
 }
