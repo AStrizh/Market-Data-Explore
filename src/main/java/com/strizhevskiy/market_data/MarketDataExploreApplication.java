@@ -9,5 +9,4 @@ public class MarketDataExploreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MarketDataExploreApplication.class, args);
 	}
-
 }
